@@ -21,12 +21,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailFragment extends Fragment {
 
-    @BindView(R.id.listActionButton)
-    FloatingActionButton fab;
-
-    @BindView(R.id.textView)
-    TextView tv;
-
     private int dogUuid;
 
     public DetailFragment() {
@@ -48,14 +42,8 @@ public class DetailFragment extends Fragment {
 
         if(getArguments() != null) {
             dogUuid = DetailFragmentArgs.fromBundle(getArguments()).getDogUuid();
-            tv.setText(String.valueOf(dogUuid));
         }
 
-        fab.setOnClickListener(view1 -> goToList());
     }
 
-    private void goToList() {
-        NavDirections action = DetailFragmentDirections.actionList();
-        Navigation.findNavController(fab).navigate(action);
-    }
 }

@@ -20,9 +20,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ListFragment extends Fragment {
 
-    @BindView(R.id.floatingActionButton)
-    FloatingActionButton fab;
-
     public ListFragment() {
     }
 
@@ -35,20 +32,6 @@ public class ListFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        fab.setOnClickListener(v -> goToDetails());
-    }
-
-    private void goToDetails() {
-        ListFragmentDirections.ActionDetail action = ListFragmentDirections.actionDetail();
-        int random = (int)(Math.random() * 10 + 1);
-        action.setDogUuid(random);
-        Navigation.findNavController(fab).navigate(action);
     }
 
 }
