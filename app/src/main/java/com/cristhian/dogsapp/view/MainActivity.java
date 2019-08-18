@@ -1,8 +1,10 @@
-package com.cristhian.dogsapp;
+package com.cristhian.dogsapp.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.cristhian.dogsapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
