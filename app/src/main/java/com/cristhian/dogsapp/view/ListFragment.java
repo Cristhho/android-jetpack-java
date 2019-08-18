@@ -45,7 +45,9 @@ public class ListFragment extends Fragment {
     }
 
     private void goToDetails() {
-        NavDirections action = ListFragmentDirections.actionDetail();
+        ListFragmentDirections.ActionDetail action = ListFragmentDirections.actionDetail();
+        int random = (int)(Math.random() * 10 + 1);
+        action.setDogUuid(random);
         Navigation.findNavController(fab).navigate(action);
     }
 

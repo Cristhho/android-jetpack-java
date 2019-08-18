@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cristhian.dogsapp.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,6 +23,11 @@ public class DetailFragment extends Fragment {
 
     @BindView(R.id.listActionButton)
     FloatingActionButton fab;
+
+    @BindView(R.id.textView)
+    TextView tv;
+
+    private int dogUuid;
 
     public DetailFragment() {
     }
@@ -39,6 +45,11 @@ public class DetailFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(getArguments() != null) {
+            dogUuid = DetailFragmentArgs.fromBundle(getArguments()).getDogUuid();
+            tv.setText(String.valueOf(dogUuid));
+        }
 
         fab.setOnClickListener(view1 -> goToList());
     }
