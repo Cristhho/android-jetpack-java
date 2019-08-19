@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.cristhian.dogsapp.R;
 import com.cristhian.dogsapp.model.DogBreed;
+import com.cristhian.dogsapp.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,9 @@ public class DogsListAdapter extends RecyclerView.Adapter<DogsListAdapter.DogVie
 
         name.setText(dogsList.get(position).dogBreed);
         dogLifespan.setText(dogsList.get(position).lifeSpan);
+
+        Util.loadImage(image, dogsList.get(position).imageUrl, Util.getProgressDrawable(
+                image.getContext()));
     }
 
     @Override
