@@ -5,44 +5,25 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.navigation.NavDirections;
-import androidx.navigation.Navigation;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.cristhian.dogsapp.R;
+import com.cristhian.dogsapp.databinding.FragmentDetailBinding;
 import com.cristhian.dogsapp.model.DogBreed;
-import com.cristhian.dogsapp.util.Util;
 import com.cristhian.dogsapp.viewmodel.DetailViewModel;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailFragment extends Fragment {
 
     private int dogUuid;
     private DetailViewModel detailViewModel;
 
-    @BindView(R.id.dogImage)
-    ImageView dogImage;
-
-    @BindView(R.id.dogName)
-    TextView dogName;
-
-    @BindView(R.id.dogPurpose)
-    TextView dogPurpose;
-
-    @BindView(R.id.dogTemperament)
-    TextView dogTemperament;
-
-    @BindView(R.id.dogLifespan)
-    TextView dogLifespan;
+    private FragmentDetailBinding binding;
 
     public DetailFragment() {
     }
@@ -51,10 +32,8 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_detail, container, false);
-        ButterKnife.bind(this, view);
-
-        return view;
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
+        return binding.getRoot();
     }
 
     @Override
@@ -75,13 +54,7 @@ public class DetailFragment extends Fragment {
     private void observeViewModel() {
         detailViewModel.dogBreed.observe(this, dogBreed -> {
             if(dogBreed != null && dogBreed instanceof DogBreed) {
-                dogName.setText(dogBreed.dogBreed);
-                dogPurpose.setText(dogBreed.bredFor);
-                dogTemperament.setText(dogBreed.temperament);
-                dogLifespan.setText(dogBreed.lifeSpan);
-
-                Util.loadImage(dogImage, dogBreed.imageUrl, Util.getProgressDrawable(
-                        dogImage.getContext()));
+                binding.setDogBreed(dogBreed);
             }
         });
     }
