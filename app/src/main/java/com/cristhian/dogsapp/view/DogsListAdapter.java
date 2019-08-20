@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cristhian.dogsapp.R;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class DogsListAdapter extends RecyclerView.Adapter<DogsListAdapter.DogViewHolder> {
@@ -45,11 +47,19 @@ public class DogsListAdapter extends RecyclerView.Adapter<DogsListAdapter.DogVie
         TextView name = holder.itemView.findViewById(R.id.dogName);
         TextView dogLifespan = holder.itemView.findViewById(R.id.dogLifespan);
 
+        LinearLayout layout = holder.itemView.findViewById(R.id.dogLayout);
+
         name.setText(dogsList.get(position).dogBreed);
         dogLifespan.setText(dogsList.get(position).lifeSpan);
 
         Util.loadImage(image, dogsList.get(position).imageUrl, Util.getProgressDrawable(
                 image.getContext()));
+
+        layout.setOnClickListener(v -> {
+            ListFragmentDirections.ActionDetail action = ListFragmentDirections.actionDetail();
+            action.setDogUuid(dogsList.get(position).uuid);
+            Navigation.findNavController(layout).navigate(action);
+        });
     }
 
     @Override

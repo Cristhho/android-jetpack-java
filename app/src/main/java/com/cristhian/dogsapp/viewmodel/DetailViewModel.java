@@ -1,18 +1,55 @@
 package com.cristhian.dogsapp.viewmodel;
 
+import android.app.Application;
+import android.os.AsyncTask;
+
 import com.cristhian.dogsapp.model.DogBreed;
+import com.cristhian.dogsapp.model.DogDatabase;
 
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
-public class DetailViewModel extends ViewModel {
+public class DetailViewModel extends AndroidViewModel {
 
     public MutableLiveData<DogBreed> dogBreed = new MutableLiveData<>();
 
-    public void getDogBreed() {
-        DogBreed dog1 = new DogBreed("1", "corgi", "15 years", "", "companionship", "calm and friendly", "");
+    private AsyncTask<Integer, Void, DogBreed> fetchDogTask;
 
-        dogBreed.setValue(dog1);
+    public DetailViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    public void getDogBreed(int uuid) {
+        fetchDogTask = new RetrieveDogTask();
+        fetchDogTask.execute(uuid);
+    }
+
+    private void dogRetrieved(DogBreed breed) {
+        dogBreed.setValue(breed);
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+
+        if(fetchDogTask != null) {
+            fetchDogTask.cancel(true);
+            fetchDogTask = null;
+        }
+    }
+
+    private class RetrieveDogTask extends AsyncTask<Integer, Void, DogBreed> {
+
+        @Override
+        protected DogBreed doInBackground(Integer... integers) {
+            return DogDatabase.getInstance(getApplication()).dogDao().getDog(integers[0]);
+        }
+
+        @Override
+        protected void onPostExecute(DogBreed dogBreed) {
+            dogRetrieved(dogBreed);
+        }
     }
 
 }
