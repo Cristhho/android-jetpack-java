@@ -8,6 +8,7 @@ import com.cristhian.dogsapp.model.DogBreed;
 import com.cristhian.dogsapp.model.DogDao;
 import com.cristhian.dogsapp.model.DogDatabase;
 import com.cristhian.dogsapp.model.DogsApiService;
+import com.cristhian.dogsapp.util.NotificationsHelper;
 import com.cristhian.dogsapp.util.SharedPreferencesHelper;
 
 import java.util.ArrayList;
@@ -76,6 +77,8 @@ public class ListViewModel extends AndroidViewModel {
 
                         Toast.makeText(getApplication(), "Dogs retrieved from the API",
                                 Toast.LENGTH_LONG).show();
+
+                        NotificationsHelper.getInstance(getApplication()).createNotification();
                     }
 
                     @Override
