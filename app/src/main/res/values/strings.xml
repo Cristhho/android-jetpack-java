@@ -14,4 +14,6 @@
     <string name="cache_refresh">Cache duration in seconds</string>
 
     <string name="menu_title">Settings</string>
+    <string name="action_send">Send SMS</string>
+    <string name="action_share">Share</string>
 </resources>
